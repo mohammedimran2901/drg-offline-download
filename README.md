@@ -1,5 +1,10 @@
-# DRG Revenue Focus Tool — Offline Download
+# DRG Revenue Focus Tool — Information Site
 
-**Download:** [`drg-revenue-tool-offline.html`](drg-revenue-tool-offline.html) → then just double-click the downloaded file. It opens in your browser and works 100% offline — no install, no internet needed.
+This is the **information site** for the DRG Revenue Focus Tool: what the tool
+does, how the opportunity is calculated, and the benchmark evidence behind it.
 
-The tool contains only the public CHI AR-DRG v9.0 price table and public AIHW (Australia) benchmark splits. No patient data is included or transmitted — any file you import stays on your computer.
+**The tool itself is distributed privately** (single offline HTML file) by the
+revenue analytics team — use the "Request access" link on the site.
+
+Live page: https://mohammedimran2901.github.io/drg-offline-download/
+
