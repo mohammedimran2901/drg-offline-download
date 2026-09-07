@@ -1,14 +1,73 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><title>DRG Revenue Focus Tool — Download</title>
-<style>body{font-family:'Segoe UI',system-ui,sans-serif;background:#f4f6fa;margin:0;}header{background:linear-gradient(90deg,#0d2149,#14336b);color:#fff;padding:40px 24px;text-align:center;}main{max-width:760px;margin:30px auto;padding:0 20px;}.btn{display:inline-block;background:#0e7c7b;color:#fff;padding:18px 36px;border-radius:10px;font-size:20px;font-weight:700;text-decoration:none;}ol{line-height:2;font-size:15px;}p,li{color:#333;}</style></head>
-<body><header><h1>DRG Revenue Focus Tool — Saudi Arabia</h1><p style="opacity:.8">Single-file offline tool · no install · no internet</p></header>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DRG Revenue Focus Tool — Saudi Arabia</title>
+<style>
+:root{--navy:#0d2149;--teal:#0e7c7b;--gold:#c9a227;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif;}
+body{background:#f4f6fa;color:#1c2333;}
+header{background:linear-gradient(120deg,#0d2149,#14336b 60%,#0e7c7b);color:#fff;padding:64px 24px;text-align:center;}
+header h1{font-size:34px;max-width:900px;margin:0 auto 10px;}
+header p{opacity:.85;max-width:760px;margin:0 auto;font-size:17px;line-height:1.6;}
+main{max-width:1000px;margin:0 auto;padding:40px 20px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:26px 0;}
+.card{background:#fff;border-radius:12px;padding:22px;box-shadow:0 1px 4px rgba(16,24,40,.1);border-top:4px solid var(--teal);}
+.card h3{color:var(--navy);margin-bottom:8px;font-size:17px;}
+.card p{font-size:14px;line-height:1.6;color:#444;}
+h2{color:var(--navy);margin:34px 0 12px;font-size:24px;}
+.formula{background:var(--navy);color:#fff;border-radius:12px;padding:26px;text-align:center;font-size:17px;line-height:1.9;}
+.formula b{color:var(--gold);}
+.steps{counter-reset:s;}
+.steps li{margin:14px 0;padding-left:44px;position:relative;line-height:1.6;font-size:15px;}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.src{background:#fff;border-radius:10px;padding:16px 18px;margin:10px 0;box-shadow:0 1px 3px rgba(16,24,40,.08);font-size:14px;line-height:1.6;}
+.src b{color:var(--navy);} .tag{display:inline-block;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:700;}
+.tag.g{background:#e6f4ee;color:#1e8e5a;} .tag.r{background:#fdecea;color:#c0392b;} .tag.y{background:#fff3cd;color:#7a5c00;}
+.cta{background:linear-gradient(120deg,#0d2149,#14336b);border-radius:14px;color:#fff;padding:34px;text-align:center;margin:36px 0;}
+.cta p{opacity:.85;margin:8px 0 18px;}
+.cta a{background:var(--gold);color:var(--navy);padding:14px 30px;border-radius:8px;text-decoration:none;font-weight:700;}
+footer{text-align:center;padding:26px;color:#888;font-size:12px;}
+</style></head>
+<body>
+<header>
+  <h1>DRG Revenue Focus Tool</h1>
+  <p>A single-file, fully offline analytics tool for Saudi Arabia's national payor &amp; revenue service teams — identifying where minor-to-major complexity classification loses revenue, and which facilities to target first.</p>
+</header>
 <main>
-<p><a class="btn" href="drg-revenue-tool-offline.html" download>⬇ Download the tool</a></p>
-<ol>
-<li>Click the button above to download <b>drg-revenue-tool-offline.html</b> (≈1 MB)</li>
-<li>Double-click the downloaded file — it opens in your browser</li>
-<li>Go to <b>🏥 Facility Targeting</b> and drop in your patient-level CSV/Excel extract (DARS format works as-is)</li>
-<li>Everything runs offline on your computer — no data leaves your machine</li>
-</ol>
-<p><i>Benchmarks: 306/309 DRG groups evidenced from the official AIHW AR-DRG v9.0 data cube (2019–20). Opportunity = casemix gap vs international benchmark × uplift × insured share (claims ÷ DARS).</i></p>
-</main></body></html>
+  <h2>What it does</h2>
+  <div class="grid">
+    <div class="card"><h3>🎯 Biggest bank for buck</h3><p>Ranks all 309 AR-DRG v9.0 groups by the money at stake on <b>insured cases</b> at the minor→major coding boundary — including what a shift of just 1% of cases is worth.</p></div>
+    <div class="card"><h3>🏥 Facility targeting</h3><p>Import a patient-level DARS extract (CSV/Excel). The tool computes each facility's casemix index, flags those above/below the international target, and ranks facilities by realisable SAR opportunity.</p></div>
+    <div class="card"><h3>📊 Chapters &amp; benchmarks</h3><p>Browse DRG groups by clinical chapter with their MINC/MAJC prices and the evidenced international minor/major casemix split for each group.</p></div>
+    <div class="card"><h3>⚙️ Simulator</h3><p>Model the revenue effect of reclassification programmes — shift a % of Minor episodes to Major across all DRGs, high-risk DRGs, or the top 20.</p></div>
+  </div>
+  <h2>How the opportunity is calculated</h2>
+  <div class="formula">
+    Facility minor share − <b>international benchmark minor share</b><br>
+    × cases × <b>minor→major uplift (SAR)</b><br>
+    × <b>insured share</b> of the DRG (claims ÷ DARS activity)
+  </div>
+  <p style="text-align:center;margin-top:14px;font-size:14px;color:#555;">Only insured cases can justifiably generate additional revenue, so every opportunity is weighted by the insured share of activity from the CHI price table.</p>
+
+  <h2>Get started in 4 steps</h2>
+  <ol class="steps">
+    <li>Download the single HTML file (≈1 MB) from the revenue analytics team</li>
+    <li>Double-click it — it opens in any browser, <b>no installation, no internet required</b></li>
+    <li>Open <b>Facility Targeting</b> and drop in a patient-level extract — DARS format works as-is (ORG, DRG_, Complexity columns are auto-detected)</li>
+    <li>Review the ranked facility league table and export the results CSV for your engagement visits</li>
+  </ol>
+
+  <h2>Benchmark evidence</h2>
+  <div class="src"><b>Australia — AIHW AR-DRG data cubes</b> <span class="tag g">PRIMARY SOURCE</span><br>Free public separations per AR-DRG code. The KSA DRG model is an AR-DRG v9.0 adaptation, so complexity-tier splits for <b>306 of 309 DRG groups</b> are computed directly from the official v9.0 cube (2019–20) — the same classification version as the CHI price table.</div>
+  <div class="src"><b>United Kingdom — NHS England Hospital Admitted Patient Care Activity</b> <span class="tag y">SECONDARY</span><br>Public episode counts per HRG4+ code and unit costs; useful at chapter level.</div>
+  <div class="src"><b>Germany — BfArM G-DRG report browser</b> <span class="tag y">SECONDARY</span><br>Public case counts per G-DRG including complexity splits; useful for spot-checking families.</div>
+  <div class="src"><b>GCC — UAE DoH (Shafafiya) &amp; KSA CHI</b> <span class="tag r">NOT PUBLICLY PUBLISHED</span><br>Regulators publish tariff structures but not casemix activity shares per tier. Recommend requesting tier splits from CHI/DARS; until then the tool uses the Australian evidence as the external anchor.</div>
+
+  <div class="cta">
+    <h2 style="color:#fff;margin:0 0 6px;">Private by design</h2>
+    <p>The tool is a single file. All imported patient data stays on your computer — nothing is uploaded, transmitted, or stored anywhere. Access is managed by the revenue analytics team.</p>
+    <a href="mailto:mohammedimran2901@users.noreply.github.com?subject=DRG%20Revenue%20Focus%20Tool%20access">Request access to the tool</a>
+  </div>
+
+</main>
+<footer>Price table: CHI AR-DRG v9.0 (user-supplied). Benchmarks: AIHW AR-DRG v9.0 data cube 2019–20. For internal revenue-strategy use.</footer>
+</body></html>
