@@ -324,16 +324,52 @@ function readFile(f){
     const r = new FileReader();
     r.onload = ev => {
       try {
-        const text = ev.target.result, first = text.split("\n")[0];
-        const delim = (first.match(/\t/g)||[]).length >= (first.match(/,/g)||[]).length && first.includes("\t") ? "\t" : ",";
-        const lines = text.replace(/\r/g,"").split("\n").filter(l => l.trim() !== "");
-        HEADERS = lines[0].split(delim).map(h => h.trim());
-        ROWS = lines.slice(1).map(l => { const c = l.split(delim), o = {}; HEADERS.forEach((h,i)=> o[h] = c[i] !== undefined ? c[i].trim() : null); return o; });
+        let text = ev.target.result || "";
+        if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1); // strip BOM
+        const parsed = parseDelimited(text);
+        HEADERS = parsed.headers; ROWS = parsed.rows;
         done();
-      } catch(ex){ $("err").textContent = "⚠️ " + ex.message; }
+      } catch(ex){ $("err").textContent = "⚠️ Could not read this file: " + ex.message; $("fileInfo").textContent = ""; }
     };
     r.readAsText(f);
   }
+}
+
+// Quote-aware delimiter-sniffing parser: handles "values, with commas",
+// escaped quotes, tab- and semicolon-delimited files.
+function parseDelimited(text){
+  const lines = text.replace(/\r/g,"").split("\n");
+  let i0 = 0;
+  while (i0 < lines.length && !lines[i0].trim()) i0++;   // skip leading blank lines
+  const body = lines.slice(i0);
+  if (!body.length || !body[0] || !body[0].trim())
+    throw new Error("the file appears to be empty — check the export and try again");
+  const sample = body.slice(0, Math.min(20, body.length)).join("\n");
+  const count = (s, ch) => s.split(ch).length - 1;
+  const cands = [",", "\t", ";", "|"].map(d => ({d, n: count(sample, d)}));
+  cands.sort((a,b) => b.n - a.n);
+  const delim = cands[0].n > 0 ? cands[0].d : ",";
+  const parseLine = line => {
+    const out = []; let cur = "", inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (inQ) {
+        if (ch === '"') { if (line[i+1] === '"') { cur += '"'; i++; } else inQ = false; }
+        else cur += ch;
+      } else if (ch === '"' && cur === "") inQ = true;
+      else if (ch === delim) { out.push(cur); cur = ""; }
+      else cur += ch;
+    }
+    out.push(cur);
+    return out.map(s => s.trim());
+  };
+  const headers = parseLine(body[0]).map((h,i) => h || "col" + (i+1));
+  const rows = body.slice(1).map(l => {
+    const c = parseLine(l), o = {};
+    headers.forEach((h,i) => o[h] = c[i] !== undefined && c[i] !== "" ? c[i] : null);
+    return o;
+  });
+  return {headers, rows};
 }
 const pick = (pats, def) => { for (const p of pats) { const h = HEADERS.find(h => p.test(h.toLowerCase())); if (h) return h; } return def; };
 function fillMap(){
