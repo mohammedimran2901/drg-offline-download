@@ -1,10 +1,6 @@
-# DRG Revenue Focus Tool — Information Site
+# DRG Revenue Focus Tool
 
-This is the **information site** for the DRG Revenue Focus Tool: what the tool
-does, how the opportunity is calculated, and the benchmark evidence behind it.
+Information + download site for the single-file offline DRG casemix & revenue
+opportunity tool (Saudi AR-DRG v9.0, evidenced AIHW benchmarks).
 
-**The tool itself is distributed privately** (single offline HTML file) by the
-revenue analytics team — use the "Request access" link on the site.
-
-Live page: https://mohammedimran2901.github.io/drg-offline-download/
-
+Live: https://mohammedimran2901.github.io/drg-offline-download/
